@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flash Game Archive</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+</head>
+<body>
+  <div class="page-container">
+
+  <%- include('partials/header.ejs') %>
+  <script src="/js/search-preview.js"></script>
+  <script src="/js/ruffle.js"></script>
+
+
+  <div class="title-block">
+    <h1>Relive the Flash Era!</h1>
+    <p>Play and discover a vast collection of classic nostalgic Flash games from the past. Start by exploring the metadata categories, or finding a long lost game using the fuzzy search engine.
+      </p> 
+      
+     <p>If you want to help in our preservation efforts, consider uploading yet to be archived games by pressing the Upload button below or help refine our metadata by pressing the "edit metadata" 
+       button on a game's page to help future users (re)finding their favorite titles.</p>
+    <a href="/upload" class="upload-link">Upload a game</a>
+  </div>
+  
+  <section class="featured">
+    <h2>Try out a random game below!</h2>
+    <div class="game-grid">
+      <% games.slice(0, 4).forEach(game => { %>
+        <a href="/play/<%= game.id %>" class="game-tile">
+          <img src="/data/images/<%= game.image %>" alt="<%= game.title %> preview" />
+          <div class="tile-title"><%= game.title %></div>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+  <details class="about-collapse">
+    <summary>About this project</summary>
+    <p>This project is part of a master's thesis in Information Science and focuses on the preservation and rediscovery of legacy Flash games.</p>
+
+    <p>As Adobe Flash was deprecated in 2020, thousands of browser-based games are at risk of disappearing. This prototype uses the <strong>Ruffle</strong> emulator to bring those games back to life directly in the browser — no plugins needed.</p>
+
+    <p>What makes this project unique is its use of enhanced metadata and ontology-driven categorization to support memory recall, searchability, and game discovery, especially for users who only vaguely remember what a game looked or felt like.</p>
+
+    <p>Goals:</p>
+    <ul>
+      <li>Preserve culturally significant Flash games</li>
+      <li>Enable search beyond titles (e.g. visual traits, mechanics, mood)</li>
+      <li>Prototype a usable interface for archival access</li>
+    </ul>
+
+    <p>Built using HTML, CSS, Node.js, Ruffle, and lots of nostalgia.</p>
+  </details>
+  
+<%- include('partials/footer.ejs') %>
+  
+</div>
+</body>
+</html>

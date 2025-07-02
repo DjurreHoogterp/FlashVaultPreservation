@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search results for "<%= query %>"</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+</head>
+<body>
+  <div class="page-container">
+
+    <%- include('partials/header.ejs') %>
+    <script src="/js/search-preview.js"></script>
+    <script src="/js/ruffle.js"></script>  
+
+    <h1>
+      Search results for "<%= query %>"
+      <% if (field) { %>
+        in <%= field.replace('.', ' ') %>
+      <% } %>
+    </h1>
+    <button onclick="history.back()" class="details-button">Go back</button>
+
+    <% if (results.length === 0) { %>
+      <p>No games found. Try something else?</p>
+    <% } else { %>
+      <div class="search-results">
+        <% results.forEach(game => { %>
+          <a class="result-card" href="/play/<%= game.id %>">
+            <img class="thumbnail" src="/data/images/<%= game.image %>" alt="<%= game.title %> thumbnail">
+            <div class="result-details">
+              <h4><%= game.title %></h4>
+              <p><%= game.description %></p>
+              <div class="tags">
+
+                <% if (game.genre?.length) { %>
+                  <span class="tag">Genre: <%= game.genre.join(', ') %></span>
+                <% } %>
+
+                <% if (game.theme?.length) { %>
+                  <span class="tag">Theme: <%= game.theme.join(', ') %></span>
+                <% } %>
+
+                <% if (game.difficulty) { %>
+                  <span class="tag">Difficulty: <%= game.difficulty %></span>
+                <% } %>
+
+                <% if (game.year) { %>
+                  <span class="tag">Year: <%= game.year %></span>
+                <% } %>
+
+              </div>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+
+  </div>
+</body>
+</html>

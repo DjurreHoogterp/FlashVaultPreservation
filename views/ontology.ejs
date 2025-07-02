@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Game Metadata Ontology</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    
+    <div class="page-container ontology-page">
+        <%- include('partials/header.ejs') %>
+      
+        <h1>Game metadata categories</h1>
+        <button onclick="history.back()" class="details-button">Go back</button>
+        <section class="ontology_link">
+          <h3>Game Type & Style</h3>
+          <ul>
+            <% ['difficulty', 'genre', 'perspective', 'setting', 'theme', 'visual_style'].forEach(field => { %>
+              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+            <% }) %>
+          </ul>
+          <h3>Gameplay</h3>
+          <ul>
+            <% ['character', 'controls', 'emotion', 'mechanics', 'multiplayer_mode', 'weapons'].forEach(field => { %>
+              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+            <% }) %>
+          </ul>
+          <h3>Platforms & Origin</h3>
+          <ul>
+            <% ['platform', 'year'].forEach(field => { %>
+              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+            <% }) %>
+          </ul>
+        </section>
+      </div>
+</body>
+</html>

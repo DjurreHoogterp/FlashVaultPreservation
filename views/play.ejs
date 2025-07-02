@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= game.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+  
+  <!-- Load Ruffle from CDN -->
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+  <!-- Local config loader -->
+  <script src="/js/ruffle.js"></script>
+</head>
+<body>
+  <div class="page-container">
+
+    <%- include('partials/header.ejs') %>
+
+    <script src="/js/search-preview.js"></script>
+    <script src="/js/ruffle.js"></script>
+
+    <div class="game-header">
+      <h1 class="game-title"><%= game.title %></h1>
+      <button onclick="history.back()" class="details-button">Go back</button>
+      <a href="#game-info" class="details-button">More details about this game</a>
+    </div>
+
+    <div class="game-player">
+      <object
+        type="application/x-shockwave-flash"
+        data="/games/<%= game.file %>"
+        width="960"
+        height="720">
+        <param name="movie" value="/games/<%= game.file %>">
+      </object>
+    </div>
+
+    <section class="game-info" id="game-info">
+      <div class="metadata-header">
+        <h2>Game Metadata</h2>
+        <div class="metadata-actions">
+          <a href="/edit/<%= game.id %>" class="button-link">Edit metadata</a>
+          <a href="/edit-history/<%= game.id %>" class="button-link">View editing history</a>
+        </div>
+      </div>
+      <p><%= game.description %></p>
+      <ul id="game-metadata">
+
+        <h3>Game Type & Style</h3>
+      
+        <% if (game.genre?.length) { %>
+          <li><strong>Genre:</strong>
+            <% game.genre.forEach((g, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(g) %>&field=genre"><%= g %></a><%= i < game.genre.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.theme?.length) { %>
+          <li><strong>Theme:</strong>
+            <% game.theme.forEach((t, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(t) %>&field=theme"><%= t %></a><%= i < game.theme.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.setting) { %>
+          <li><strong>Setting:</strong>
+            <a href="/search?q=<%= encodeURIComponent(game.setting) %>&field=setting"><%= game.setting %></a>
+          </li>
+        <% } %>
+      
+        <% if (game.visual_style) { %>
+          <li><strong>Visual Style:</strong>
+            <a href="/search?q=<%= encodeURIComponent(game.visual_style) %>&field=visual_style"><%= game.visual_style %></a>
+          </li>
+        <% } %>
+      
+        <% if (game.perspective) { %>
+          <li><strong>Perspective:</strong>
+            <a href="/search?q=<%= encodeURIComponent(game.perspective) %>&field=perspective"><%= game.perspective %></a>
+          </li>
+        <% } %>
+      
+        <% if (game.difficulty) { %>
+          <li><strong>Difficulty:</strong>
+            <a href="/search?q=<%= encodeURIComponent(game.difficulty) %>&field=difficulty"><%= game.difficulty %></a>
+          </li>
+        <% } %>
+      
+        <h3>Gameplay</h3>
+      
+        <% if (game.controls?.length) { %>
+          <li><strong>Controls:</strong>
+            <% game.controls.forEach((ctrl, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(ctrl) %>&field=controls"><%= ctrl %></a><%= i < game.controls.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.mechanics?.length) { %>
+          <li><strong>Mechanics:</strong>
+            <% game.mechanics.forEach((mech, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(mech) %>&field=mechanics"><%= mech %></a><%= i < game.mechanics.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.multiplayer_mode?.length) { %>
+          <li><strong>Mode:</strong>
+            <% game.multiplayer_mode.forEach((mode, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(mode) %>&field=multiplayer_mode"><%= mode %></a><%= i < game.multiplayer_mode.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.character?.length) { %>
+          <li><strong>Character:</strong>
+            <% game.character.forEach((c, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(c) %>&field=character"><%= c %></a><%= i < game.character.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.emotion?.length) { %>
+          <li><strong>Emotion:</strong>
+            <% game.emotion.forEach((emo, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(emo) %>&field=emotion"><%= emo %></a><%= i < game.emotion.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <% if (game.weapons?.length) { %>
+          <li><strong>Weapons:</strong>
+            <% game.weapons.forEach((weapon, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(weapon) %>&field=weapons"><%= weapon %></a><%= i < game.weapons.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <h3>Related & Series</h3>
+      
+        <% if (game.series_link) { %>
+          <li><strong>Part of Series:</strong>
+            <a href="<%= game.series_link %>"><%= game.series_name %></a>
+          </li>
+        <% } %>
+      
+        <% if (game.similar_titles?.length) { %>
+          <li><strong>Similar Titles:</strong>
+            <% game.similar_titles.forEach((title, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(title) %>&field=title"><%= title %></a><%= i < game.similar_titles.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <h3>Technical & Platforms</h3>
+      
+        <% if (game.year) { %>
+          <li><strong>Year:</strong>
+            <a href="/search?q=<%= encodeURIComponent(game.year) %>&field=year"><%= game.year %></a>
+          </li>
+        <% } %>
+      
+        <% if (game.platform?.length) { %>
+          <li><strong>Originally on:</strong>
+            <% game.platform.forEach((p, i) => { %>
+              <a href="/search?q=<%= encodeURIComponent(p) %>&field=platform"><%= p %></a><%= i < game.platform.length - 1 ? ', ' : '' %>
+            <% }) %>
+          </li>
+        <% } %>
+      
+        <h3>Download</h3>
+      
+        <li>
+          <a href="/games/<%= game.file %>" download="<%= game.title.replace(/\s+/g, '_') %>.swf" class="download-button">
+            Download the "<%= game.title %>" SWF file
+          </a>
+        </li>
+      
+      </ul>
+      
+    </section>
+  </div>
+</body>
+</html>

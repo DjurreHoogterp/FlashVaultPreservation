@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload New Game</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap" rel="stylesheet">
+ 
+</head>
+<body>
+  <div class="page-container">
+    <%- include('partials/header.ejs') %>
+    <h1>Upload New Game</h1>
+    <button onclick="history.back()" class="details-button">Go back</button>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <label>ID: <input type="text" name="id" required></label><br>
+      <label>Title: <input type="text" name="title" required></label><br>
+      <label>Description: <textarea name="description"></textarea></label><br>
+      <label>Year: <input type="text" name="year"></label><br>
+      <label>Genre (comma-separated): <input type="text" name="genre"></label><br>
+      <label>Theme: <input type="text" name="theme"></label><br>
+      <label>Mechanics: <input type="text" name="mechanics"></label><br>
+      <label>Controls: <input type="text" name="controls"></label><br>
+      <label>Platform: <input type="text" name="platform"></label><br>
+      <label>Perspective: <input type="text" name="perspective"></label><br>
+      <label>Difficulty: <input type="text" name="difficulty"></label><br>
+      <label>Visual Style: <input type="text" name="visual_style"></label><br>
+      <label>Setting: <input type="text" name="setting"></label><br>
+      <label>Emotion: <input type="text" name="emotion"></label><br>
+      <label>Character: <input type="text" name="character"></label><br>
+      <label>Weapons: <input type="text" name="weapons"></label><br>
+      <label>Multiplayer Mode: <input type="text" name="multiplayer_mode"></label><br>
+      <label>Similar Titles: <input type="text" name="similar_titles"></label><br>
+      <label>Series Name: <input type="text" name="series_name"></label><br>
+      <label>Series Link: <input type="text" name="series_link"></label><br>
+      <label>Background Image (just filename for now): <input type="text" name="background_image"></label><br><br>
+
+      <label>SWF File: <input type="file" name="swf" accept=".swf"></label><br>
+      <label>Thumbnail Image: <input type="file" name="image" accept="image/*"></label><br><br>
+
+      <button type="submit">Upload</button>
+    </form>
+  </div>
+</body>
+</html>

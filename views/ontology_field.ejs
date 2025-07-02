@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= field.replace('_', ' ') %> – Game Metadata</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="ontology-page">
+  <div class="page-container">
+    <%- include('partials/header.ejs') %>
+
+    <h1>Category: <%= field.replace('_', ' ') %></h1>
+    <button onclick="history.back()" class="details-button">Go back</button>
+    <section>
+      <h3><%= field.replace('_', ' ') %></h3>
+      <ul>
+        <% values.forEach(value => { %>
+          <li>
+            <a href="/search?q=<%= encodeURIComponent(value) %>&field=<%= field %>">
+              <%= value %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,801 @@
+/* --- Body / general of page styling --- */
+body {
+    background-color: #003366;
+    font-family: Verdana, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;}
+a {
+    color: inherit;
+    text-decoration: none;}
+h1, h2, h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0.5em 0 0.3em;}
+
+
+    #game-metadata h3 {
+      color: #003366; /* deep blue, adjust as needed */
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1rem;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      text-transform: uppercase;
+    }
+
+    .metadata-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;  /* adjust spacing as needed */
+    }
+    
+    .metadata-header h2 {
+      margin: 0;
+      font-size: 1.5rem;    /* match your existing title size */
+    }
+    
+    .metadata-header .edit-button {
+      background-color: #003366; 
+      color: #fff;
+      padding: 0.4em 0.8em;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    
+    .metadata-header .edit-button:hover {
+      background-color: #002244;
+    }
+    
+
+    h4 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.25rem;
+      margin-bottom: 1em;
+      color: #003366;
+    }
+
+
+
+/* --- EDIT page --- */
+.edit-form {
+  max-width: 600px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.edit-form input[type="text"],
+.edit-form textarea {
+  width: 100%;
+  padding: 0.5em;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-form label {
+  font-weight: bold;
+  font-family: 'Press Start 2P', monospace;
+  margin-top: 1rem;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.edit-actions .cancel-button {
+  color: #003366;
+  text-decoration: underline;
+}
+
+
+/* ---  Button to ontology search --- */
+.search-bar-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.ontology-button {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* --- Ontology page styling--- */
+/* Container spacing */
+.ontology-page {
+  padding: 2rem;
+}
+
+/* Header title */
+.ontology-page h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  background-color: transparent;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+/* Section layout */
+.ontology-page section {
+  background: #0066cc;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+}
+
+/* Subheaders */
+.ontology-page h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  color: #ffcc00;
+  margin-bottom: 1rem;
+}
+
+/* Lists */
+.ontology-page ul {
+  list-style: square;
+  padding-left: 1.5rem;
+  margin: 0;
+  padding-bottom: 1rem;
+}
+
+.ontology-page li {
+  margin-bottom: 0.5rem;
+}
+
+.ontology-page a {
+  font-family: 'Press Start 2P', cursive;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.ontology-page a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.button-link {
+  background-color: #ff6600;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  padding: 0.6em 1.2em;
+  display: inline-block;
+  text-decoration: none; 
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+  transition: background-color 0.2s;
+}
+
+.button-link:hover {
+  background-color: white;
+  text-decoration: none;
+  color: #ff6600;
+}
+
+.button-metadata {
+  background-color: #ff6600;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+  padding: 0.6rem;
+  display: inline-block;
+  text-decoration: none; 
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+  transition: background-color 0.2s;
+}
+
+.button-metadata:hover {
+  background-color: white;
+  text-decoration: none;
+  color: #ff6600;
+}
+
+/* Back button */
+.back-button-wrapper {
+  margin: 1rem 0;
+}
+
+.back-button {
+display: inline-block;
+margin: 0.5em 0 1em;
+padding: 0.6em 1.2em;
+background-color: #0033cc;
+color: white;
+font-family: 'Press Start 2P', cursive;
+font-size: 0.75em;
+text-decoration: none;
+border-radius: 0px;
+transition: background 0.2s ease;}
+
+
+.back-button:hover {
+  background-color: #001f99;;
+  color: white;
+}
+
+
+
+.metadata-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.metadata-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.metadata-header h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+
+/* --- Top search bar styling --- */
+.search-bar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;}
+.search-bar-container {
+    background-color: #0066cc;
+    padding: 1em 1em;
+    /* Beveled classic effectje*/
+    border: 2px solid #ccc;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-bottom-color: #999;
+    border-right-color: #999;
+  }  
+  .search-bar-content {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  .logo img {
+    height: 40px;}
+  .search-bar {
+    display: flex;
+    /*border: 3px solid #003399;*/
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: white;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-bottom-color: #999;
+    border-right-color: #999;}
+  .search-bar input {
+    padding: 0.6em;
+    font-size: 1em;
+    border: none;
+    outline: none;
+    flex: 1;}
+
+  .search-bar button {
+    font-family: 'Press Start 2P', monospace;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+  }
+
+/* --- Upload game styling --- */
+form label {
+  display: block;
+  margin: 0.5em 0;
+  font-family: 'Press Start 2P', cursive;
+  color: #003399;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 0.2em;
+}
+
+
+
+/* --- Top search bar live results --- */
+.live-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: white;
+    border: 2px solid #003399;
+    border-top: none;
+    border-radius: 0 0 0px 0px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none; }
+  .live-results li {
+    padding: 0.75em 1em;}
+  .live-results li a {
+    color: #003366;
+    text-decoration: none;
+    display: block;}
+  .live-results li:hover {
+    background-color: #f0f0f0;}
+
+  
+/* --- Title block styling --- */
+  .title-block {
+    text-align: left;
+    margin-top: 1rem;
+    padding: 1em 0;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-bottom-color: #999;
+    border-right-color: #999;
+  }
+  .title-block h1 {
+    font-size: 2.5em;
+    padding: 1rem;
+    color: black;
+    margin: 0;
+    padding-bottom: 1.5rem;
+  }
+  .title-block p {
+    font-family: 'Press Start 2P', cursive;
+    padding: 1rem;
+    font-size: 0.8em;
+    color: black;
+    margin-top: 0.5em;
+  }
+
+  .upload-link {
+    background-color: #ff6600;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    margin: 0.6rem;
+    padding: 0.6em 1.2em;
+    display: inline-block;
+    text-decoration: none; 
+    border: 2px solid #ccc;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-bottom-color: #999;
+    border-right-color: #999;
+    transition: background-color 0.2s;
+  }
+  
+  .uploade-link:hover {
+    background-color: white;
+    text-decoration: none;
+    color: #ff6600;
+  }
+
+.main-title { font-size: 2.5em; color: #FF6600; text-align: center; }
+.tagline { text-align: center; color: #003399; font-size: 1.2em; }
+.featured h2 { font-size: 1.5em; color: #ffffff; padding-bottom: 1.5rem;}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+  gap: 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.game-title {
+  font-size: 1.8em;
+  margin: 0;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+}
+
+
+/* --- Main page game grid --- */
+.game-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+  }
+  .game-tile img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0px;
+    display: block;
+  }
+.game-tile {
+  width: 150px;
+  height: auto;
+  background-color: white;
+  border-radius: 0px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0.5em;
+
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+}
+.game-tile a {
+    margin-top: 0.5em;
+    text-decoration: none;
+    color: #003366;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    word-wrap: break-word;
+    display: block;
+  }
+
+
+/* --- Website footer--- */  
+.site-footer {
+    background-color: #003366;
+    padding: 1em 2em;
+    color: white;
+    text-align: center;
+    margin-top: 3em; 
+   /* Beveled classic effectje*/
+   border: 2px solid #ccc;
+   border-top-color: #fff;
+   border-left-color: #fff;
+   border-bottom-color: #999;
+   border-right-color: #999;}
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    flex-wrap: wrap; }
+  .footer-content img {
+    height: 32px;
+    width: auto; }
+  
+.page-container {
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: #FF6600;
+    padding: 2em;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2); }
+
+/* -- Game Info - on the Play view */
+.game-info {
+  background: white;
+  padding: 1em 2em;
+  border-radius: 0px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  margin-top: 2em;
+  font-size: 1em;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-info summary {
+  background-color: #0033cc;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85em;
+  padding: 1em;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  outline: none;
+}
+
+.game-info summary:hover {
+  background-color: #002499;
+}
+
+.game-info ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.game-info li {
+  margin-bottom: 0.4em;
+  line-height: 1.5;
+}
+.game-info a {
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.game-info a:hover {
+  text-decoration: none;
+  color: #FF6600; /* Slightly darker for hover */
+}
+
+.game-info h2 {
+  color: #003366; /* Dark blue */
+  margin-top: 0;
+  padding-top: 0.5em; 
+}
+
+
+
+
+
+
+      /* --- Game frame on the play view --- */  
+
+      
+      .game-player {
+        background-color: #ff6600;
+        padding: 2rem 0;
+        text-align: center;
+      }
+      
+      .game-player object {
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      
+    .details-button {
+        display: inline-block;
+        margin: 0.5em 0 1em;
+        padding: 0.6em 1.2em;
+        background-color: #0033cc;
+        color: white;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.75em;
+        text-decoration: none;
+        border-radius: 0px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        transition: background 0.2s ease;}
+      
+      .details-button:hover {
+        background-color: #001f99;}
+      
+      object {
+        border: 4px solid #0033cc;
+        border-radius: 0px;}
+
+
+/* --- About page styling--- */  
+.about-page h1 {
+    font-size: 1.5rem;
+    color: white;
+  }
+
+
+
+  /* search results */
+  .search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 2em;
+  }
+  
+  
+  
+  .thumbnail {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .result-details h2 {
+    margin: 0 0 0.3em;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+  }
+  
+  .result-details p {
+    margin: 0.3em 0;
+    font-size: 0.95em;
+    font-family: 'Varela Round', sans-serif;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    font-size: 0.8em;
+    margin-top: 0.4em;
+  }
+  
+  .tag {
+    background-color: #003399;
+    color: white;
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    font-family: 'Varela Round', sans-serif;
+  }
+  
+  /* --- Search bar results --- */
+  .search-result {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;}
+  .search-result img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 0px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.15);}
+  .no-results {
+    display: block;
+    padding: 0.75em 1em;
+    color: #666;
+    font-style: italic;}
+
+
+
+    .result-card {
+      display: flex;
+      background-color: #ffffff;
+      padding: 1em;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 0px;
+      align-items: flex-start;
+      gap: 1em;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.2s ease;
+      /* Beveled classic effectje*/
+      border: 2px solid #ccc;
+      border-top-color: #fff;
+      border-left-color: #fff;
+      border-bottom-color: #999;
+      border-right-color: #999;
+    }
+    
+    .result-card:hover {
+      background-color: #eaeaea;
+    }
+    
+    .thumbnail {
+      width: 180px;
+      height: 135px;
+      object-fit: cover;
+      border: 2px solid #ccc;
+      border-radius: 0;
+    }
+    
+    .result-details h2 {
+      margin: 0 0 0.3em;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1em;
+      color: #003366;
+    }
+    
+    .result-details p {
+      margin: 0.3em 0;
+      font-size: 0.95em;
+      font-family: 'Varela Round', sans-serif;
+      color: black;
+    }
+    
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      font-size: 0.8em;
+      margin-top: 0.4em;
+    }
+
+    
+  .tag {
+      background-color: #003399;
+      color: white;
+      padding: 0.3em 0.6em;
+      border-radius: 0;
+      font-family: 'Varela Round', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+    } 
+
+
+
+/* about collapse block */
+.about-collapse {
+  background: #0066cc;
+  color: #ffffff;
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+  padding: 1.5em;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 0.9em;
+  border-radius: 0;
+  max-width: 960px;
+  margin: 2em auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.about-collapse summary {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.85em;
+  color: #ffcc00;
+  cursor: pointer;
+  outline: none;
+}
+
+.about-collapse p {
+  margin-top: 1em;
+  line-height: 1.5em;
+}
+
+.download-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #ff6600;
+  /* Beveled classic effectje*/
+  border: 2px solid #ccc;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-bottom-color: #999;
+  border-right-color: #999;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+  margin-top: 12px;
+  transition: transform 0.05s ease-in-out;
+}
+
+.download-button:hover {
+  background: white;
+  color: #ff6600;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}

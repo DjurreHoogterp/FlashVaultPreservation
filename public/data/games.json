@@ -1,0 +1,91 @@
+[
+  {
+    "id": "motherload",
+    "title": "Motherload",
+    "description": "Drill deep beneath the surface of Mars to mine precious minerals, upgrade your equipment, and uncover a chilling secret buried far below.",
+    "file": "motherload.swf",
+    "tags": ["digging", "miner", "arcade", "exploration", "economy", "strategy"],
+    "mechanics": ["resource gathering", "upgrade system", "fuel management", "inventory system", "progressive difficulty"],
+    "setting": "underground sci-fi Mars colony",
+    "visual_style": "pixel art",
+    "difficulty": "progressive",
+    "emotion": ["curiosity", "greed", "suspense", "satisfaction"],
+    "protagonist": {
+      "type": "mining contractor",
+      "vehicle": "drilling pod"
+    },
+    "image": "motherload.png",
+    "year": "2004",
+    "platform": ["XGen Studios", "Miniclip"]
+  },
+  
+  {
+    "id": "fireboy-and-watergirl-forest-temple",
+    "title": "Fireboy & Watergirl in The Forest Temple",
+    "description": "Solve puzzles and escape each temple level by controlling two characters — Fireboy and Watergirl — in perfect cooperation. Your objective is to reach the exit with both characters while avoiding hazards and collecting gems. Use switches and timing to progress.",
+    "file": "Fireboy & Watergirl - The Forest Temple.swf",
+    "tags": ["puzzle", "platformer", "co-op", "temple", "elements"],
+    "genre": "Platform Puzzle",
+    "theme": "Elemental cooperation, Ancient ruins",
+    "controls": ["WASD", "Arrow Keys"],
+    "multiplayer_mode": "Local co-op",
+    "series_link": "/series/fireboy-watergirl",
+    "series_name": "Fireboy & Watergirl Series",
+    "similar_titles": ["Snail Bob", "Twin Cat Warrior", "Bad Ice Cream"],
+    "weapons": [],
+    "mechanics": ["dual control", "switches and levers", "cooperative play", "timing"],
+    "setting": "ancient temple",
+    "visual_style": "cartoon",
+    "perspective": "2D side-scrolling",
+    "difficulty": "medium",
+    "emotion": ["cooperation", "satisfaction"],
+    "protagonist": {
+      "type": "elemental duo",
+      "vehicle": "on foot"
+    },
+    "year": "2009",
+    "platform": ["Coolmath Games", "A10", "Kizi"],
+    "image": "fireboywatergirl.png",
+    "background_image": "forest-temple-background.jpg"
+  },  
+  {
+    "id": "big-battle-tanks",
+    "title": "Big Battle Tanks",
+    "description": "Destroy enemy tanks in turn-based combat by adjusting angle, power, and selecting the right weapon in this classic artillery-style game.",
+    "file": "big-battle-tanks.swf",
+    "tags": ["tanks", "artillery", "destruction", "explosions"],
+    "mechanics": ["turn-based", "trajectory aiming", "weapon upgrades", "physics-based"],
+    "setting": "cartoon battlefield",
+    "visual_style": "cartoon",
+    "difficulty": "medium",
+    "emotion": ["excitement", "strategy"],
+    "protagonist": {
+      "type": "tank commander",
+      "vehicle": "tank"
+    },
+    "image": "bigbattletanks.png",
+    "year": "2008",
+    "platform": ["Miniclip", "Addicting Games"]
+  },
+  {
+    "id": "crush-the-castle",
+    "title": "Crush the Castle",
+    "description": "Launch trebuchet projectiles to destroy castles and eliminate enemy nobles in this classic physics-based destruction game.",
+    "file": "crush-the-castle.swf",
+    "tags": ["physics", "castle", "medieval", "destruction"],
+    "mechanics": ["projectile launching", "physics simulation", "level-based"],
+    "setting": "medieval battleground",
+    "visual_style": "gritty realism",
+    "difficulty": "medium",
+    "emotion": ["satisfaction", "power"],
+    "protagonist": {
+      "type": "siege engineer",
+      "vehicle": "trebuchet"
+    },
+    "image":"crushthecastle.png",
+    "year": "2009",
+    "platform": ["Armor Games", "Addicting Games"]
+  }
+]
+
+
