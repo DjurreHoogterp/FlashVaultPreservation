@@ -56,10 +56,39 @@ app.post('/log-action', (req, res) => {
 
   res.send({ success: true });
 });
+
+const fs = require('fs');
+
+// This creates or appends to logs/session-log.json
+app.post('/log-action', express.json(), (req, res) => {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    pid: req.body.pid,
+    action: req.body.action,
+    details: req.body.details
+  };
+
+  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+
+  // Ensure logs folder exists
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+
+  // Append the log entry
+  fs.appendFile(logPath, JSON.stringify(logEntry) + '\n', (err) => {
+    if (err) {
+      console.error('Error writing to log:', err);
+      res.status(500).send('Logging failed');
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
 // Route to inspect all sessions for debugging
 app.get('/sessions', (req, res) => {
   res.json(sessionMap);
 });
+
 
 
 // Game page: /play/:id
