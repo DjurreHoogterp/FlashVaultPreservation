@@ -60,6 +60,33 @@ app.post('/log-action', (req, res) => {
 const fs = require('fs');
 
 // This creates or appends to logs/session-log.json
+
+const path = require('path');
+
+app.post('/log-action', express.json(), (req, res) => {
+  const logEntry = {
+    timestamp: new Date().toISOString(),
+    pid: req.body.pid,
+    action: req.body.action,
+    details: req.body.details
+  };
+
+  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+
+  fs.appendFile(logPath, JSON.stringify(logEntry) + '\n', (err) => {
+    if (err) {
+      console.error('Error writing log:', err);
+      res.status(500).send('Logging failed');
+    } else {
+      console.log('Logged action:', logEntry);
+      res.sendStatus(200);
+    }
+  });
+});
+
+
 app.post('/log-action', express.json(), (req, res) => {
   const logEntry = {
     timestamp: new Date().toISOString(),
