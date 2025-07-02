@@ -17,6 +17,51 @@ app.get('/', (req, res) => {
   res.render('index', { games });
 });
 
+// Session PID
+const sessionMap = {}; // { pid: { actions: [], startedAt: Date } }
+
+app.use((req, res, next) => {
+  const pid = req.query.pid;
+
+  if (pid) {
+    // Only register once
+    if (!sessionMap[pid]) {
+      sessionMap[pid] = {
+        startedAt: new Date(),
+        actions: []
+      };
+      console.log(`Session started for PID: ${pid}`);
+    }
+
+    // Store pid in the request object so we can access it in routes
+    req.pid = pid;
+  }
+
+  next();
+});
+app.use(express.json()); // needed to parse JSON body
+
+app.post('/log-action', (req, res) => {
+  const { pid, action, details } = req.body;
+
+  if (!pid || !sessionMap[pid]) {
+    return res.status(400).send('Unknown session or missing PID');
+  }
+
+  sessionMap[pid].actions.push({
+    action,
+    details,
+    timestamp: new Date()
+  });
+
+  res.send({ success: true });
+});
+// Route to inspect all sessions for debugging
+app.get('/sessions', (req, res) => {
+  res.json(sessionMap);
+});
+
+
 // Game page: /play/:id
 app.get('/play/:id', (req, res) => {
   const stmt = db.prepare('SELECT * FROM games WHERE id = ?');

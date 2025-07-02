@@ -17,3 +17,19 @@
       </div>
     </div>
   </div>
+  <script>
+    const pid = sessionStorage.getItem('pid');
+  
+    function logAction(action, details = {}) {
+      if (!pid) return; // Avoid logging without a PID
+  
+      fetch('/log-action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pid, action, details })
+      });
+    }
+  
+    // Example
+    logAction('page_loaded', { page: 'home' });
+  </script>
