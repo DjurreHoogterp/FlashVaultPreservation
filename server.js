@@ -426,6 +426,7 @@ app.get('/ontology/:field', (req, res) => {
   res.render('ontology_field', { field, values: sortedValues });
 });
 
+app.use('/data', express.static(path.join(__dirname, 'data')));
 
 // Start server
 app.listen(3000, () => {
