@@ -46,7 +46,7 @@ const fs = require('fs');
 
 app.get('/admin/logs', (req, res) => {
   const logPath = path.join(__dirname, 'logs', 'session-log.json');
-  if (!fs.existsSync(logPath)) return res.render('admin', { logsByPid: {} });
+  if (!fs.existsSync(logPath)) return res.render('admin', { logsByPid: {}, logsRaw: '[]' });
 
   const raw = fs.readFileSync(logPath, 'utf-8').split('\n').filter(Boolean);
   const logs = raw.map(line => JSON.parse(line));
@@ -57,9 +57,15 @@ app.get('/admin/logs', (req, res) => {
     logsByPid[entry.pid].push(entry);
   }
 
-  res.render('admin', { logsByPid });
+  res.render('admin', { logsByPid, logsRaw: JSON.stringify(logs, null, 2) });
 });
 
+app.post('/admin/download', (req, res) => {
+  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  if (!fs.existsSync(logPath)) return res.status(404).send('Log file not found.');
+
+  res.download(logPath, 'session-log.json');
+});
 
 // This creates or appends to logs/session-log.json
 app.post('/log-action', express.json(), (req, res) => {

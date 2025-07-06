@@ -1,27 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Admin: User Logs</title>
-</head>
-<body>
-  <h1>Session Logs by PID</h1>
-  <p>Total unique PIDs: <%= Object.keys(logsByPid).length %></p>
+<h1>Session Logs by PID</h1>
 
-  <% Object.entries(logsByPid).forEach(([pid, entries]) => { %>
-    <details>
-      <summary>PID: <%= pid %> (Total logs: <%= entries.length %>)</summary>
-      <ul>
-        <% entries.forEach(entry => { %>
-          <li>
-            <strong><%= entry.timestamp %></strong> —
-            <code><%= entry.action %></code>
-            <% if (entry.details) { %>
-              <pre><%= JSON.stringify(entry.details, null, 2) %></pre>
-            <% } %>
-          </li>
-        <% }) %>
-      </ul>
-    </details>
-  <% }) %>
-</body>
-</html>
+<p>Total unique PIDs: <%= Object.keys(logsByPid).length %></p>
+
+<!-- Download button -->
+<form method="POST" action="/admin/download" style="margin-bottom: 1em;">
+  <button type="submit">⬇️ Download full log as JSON</button>
+</form>
+
+<% Object.entries(logsByPid).forEach(([pid, logs]) => { %>
+  <details open>
+    <summary><strong>PID: <%= pid %></strong> (Total logs: <%= logs.length %>)</summary>
+    <ul>
+      <% logs.forEach(log => { %>
+        <li>
+          <strong><%= log.timestamp %></strong> — <code><%= log.action %></code>
+          <pre><%= JSON.stringify(log, null, 2) %></pre>
+        </li>
+      <% }); %>
+    </ul>
+  </details>
+<% }); %>
