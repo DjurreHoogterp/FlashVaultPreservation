@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin: User Logs</title>
+</head>
+<body>
+  <h1>Session Logs by PID</h1>
+  <p>Total unique PIDs: <%= Object.keys(logsByPid).length %></p>
+
+  <% Object.entries(logsByPid).forEach(([pid, entries]) => { %>
+    <details>
+      <summary>PID: <%= pid %> (Total logs: <%= entries.length %>)</summary>
+      <ul>
+        <% entries.forEach(entry => { %>
+          <li>
+            <strong><%= entry.timestamp %></strong> —
+            <code><%= entry.action %></code>
+            <% if (entry.details) { %>
+              <pre><%= JSON.stringify(entry.details, null, 2) %></pre>
+            <% } %>
+          </li>
+        <% }) %>
+      </ul>
+    </details>
+  <% }) %>
+</body>
+</html>

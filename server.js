@@ -58,6 +58,24 @@ app.post('/log-action', (req, res) => {
 });
 
 const fs = require('fs');
+//Admin page
+
+app.get('/admin/logs', (req, res) => {
+  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  if (!fs.existsSync(logPath)) return res.render('admin', { logsByPid: {} });
+
+  const raw = fs.readFileSync(logPath, 'utf-8').split('\n').filter(Boolean);
+  const logs = raw.map(line => JSON.parse(line));
+
+  const logsByPid = {};
+  for (const entry of logs) {
+    if (!logsByPid[entry.pid]) logsByPid[entry.pid] = [];
+    logsByPid[entry.pid].push(entry);
+  }
+
+  res.render('admin', { logsByPid });
+});v
+
 
 // This creates or appends to logs/session-log.json
 app.post('/log-action', express.json(), (req, res) => {
