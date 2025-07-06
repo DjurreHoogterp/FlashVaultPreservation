@@ -41,22 +41,6 @@ app.use((req, res, next) => {
 });
 app.use(express.json()); // needed to parse JSON body
 
-app.post('/log-action', (req, res) => {
-  const { pid, action, details } = req.body;
-
-  if (!pid || !sessionMap[pid]) {
-    return res.status(400).send('Unknown session or missing PID');
-  }
-
-  sessionMap[pid].actions.push({
-    action,
-    details,
-    timestamp: new Date()
-  });
-
-  res.send({ success: true });
-});
-
 const fs = require('fs');
 //Admin page
 
@@ -79,20 +63,29 @@ app.get('/admin/logs', (req, res) => {
 
 // This creates or appends to logs/session-log.json
 app.post('/log-action', express.json(), (req, res) => {
-  const logEntry = {
+  const { pid, action, details } = req.body;
+
+  if (!pid) return res.status(400).send('Missing PID');
+
+  // In-memory log
+  if (!sessionMap[pid]) {
+    sessionMap[pid] = { startedAt: new Date(), actions: [] };
+  }
+
+  const entry = {
     timestamp: new Date().toISOString(),
-    pid: req.body.pid,
-    action: req.body.action,
-    details: req.body.details
+    pid,
+    action,
+    details
   };
 
-  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  sessionMap[pid].actions.push(entry);
 
-  // Ensure logs folder exists
+  // File-based log
+  const logPath = path.join(__dirname, 'logs', 'session-log.json');
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
 
-  // Append the log entry
-  fs.appendFile(logPath, JSON.stringify(logEntry) + '\n', (err) => {
+  fs.appendFile(logPath, JSON.stringify(entry) + '\n', (err) => {
     if (err) {
       console.error('Error writing to log:', err);
       res.status(500).send('Logging failed');
@@ -101,6 +94,7 @@ app.post('/log-action', express.json(), (req, res) => {
     }
   });
 });
+
 
 // Route to inspect all sessions for debugging
 app.get('/sessions', (req, res) => {
