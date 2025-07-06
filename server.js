@@ -74,7 +74,7 @@ app.get('/admin/logs', (req, res) => {
   }
 
   res.render('admin', { logsByPid });
-});v
+});
 
 
 // This creates or appends to logs/session-log.json
