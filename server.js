@@ -69,7 +69,7 @@ app.post('/admin/download', (req, res) => {
 
 // This creates or appends to logs/session-log.json
 app.post('/log-action', express.json(), (req, res) => {
-  const { pid, action, details } = req.body;
+  const { pid, assignment, action, details, page } = req.body;
 
   if (!pid) return res.status(400).send('Missing PID');
 
@@ -81,6 +81,8 @@ app.post('/log-action', express.json(), (req, res) => {
   const entry = {
     timestamp: new Date().toISOString(),
     pid,
+    assignment: assignment || null, 
+    page: page || null,             
     action,
     details
   };
@@ -100,6 +102,7 @@ app.post('/log-action', express.json(), (req, res) => {
     }
   });
 });
+
 
 
 // Route to inspect all sessions for debugging
