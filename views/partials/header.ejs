@@ -18,18 +18,16 @@
     </div>
   </div>
   <script>
-    const pid = sessionStorage.getItem('pid');
+    const urlParams = new URLSearchParams(window.location.search);
   
-    function logAction(action, details = {}) {
-      if (!pid) return; // Avoid logging without a PID
-      console.log('Logging action:', { pid, action, details }); // <-- Add this line
-      fetch('/log-action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pid, action, details })
-      });
+    const pid = urlParams.get('pid');
+    const assignment = urlParams.get('assignment');
+  
+    if (pid) sessionStorage.setItem('pid', pid);
+    if (assignment) sessionStorage.setItem('assignment', assignment);
+  
+    //clean up the visible URL
+    if (pid || assignment) {
+      window.history.replaceState({}, "", window.location.pathname);
     }
-  
-    // Example
-    logAction('page_loaded', { page: 'home' });
   </script>
