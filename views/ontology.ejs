@@ -17,22 +17,51 @@
           <h3>Game Type & Style</h3>
           <ul>
             <% ['difficulty', 'genre', 'perspective', 'setting', 'theme', 'visual_style'].forEach(field => { %>
-              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+              <li>
+                <a 
+                  href="/ontology/<%= field %>" 
+                  class="ontology-category-link" 
+                  data-category="<%= field %>">
+                  <%= field.replace('_', ' ') %>
+                </a>
+              </li>
             <% }) %>
           </ul>
           <h3>Gameplay</h3>
           <ul>
             <% ['character', 'controls', 'emotion', 'mechanics', 'multiplayer_mode', 'weapons'].forEach(field => { %>
-              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+              <li>
+                <a 
+                  href="/ontology/<%= field %>" 
+                  class="ontology-category-link" 
+                  data-category="<%= field %>">
+                  <%= field.replace('_', ' ') %>
+                </a>
+              </li>
             <% }) %>
           </ul>
           <h3>Platforms & Origin</h3>
           <ul>
             <% ['platform', 'year'].forEach(field => { %>
-              <li><a href="/ontology/<%= field %>"><%= field.replace('_', ' ') %></a></li>
+              <li>
+                <a 
+                  href="/ontology/<%= field %>" 
+                  class="ontology-category-link" 
+                  data-category="<%= field %>">
+                  <%= field.replace('_', ' ') %>
+                </a>
+              </li>
             <% }) %>
           </ul>
         </section>
       </div>
+      <script>
+        document.querySelectorAll('.ontology-category-link').forEach(link => {
+          link.addEventListener('click', function () {
+            const category = this.dataset.category;
+            logAction('click_ontology_category', { category });
+          });
+        });
+      </script>
 </body>
 </html>
