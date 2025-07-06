@@ -16,7 +16,11 @@
       <ul>
         <% values.forEach(value => { %>
           <li>
-            <a href="/search?q=<%= encodeURIComponent(value) %>&field=<%= field %>">
+            <a 
+              href="/search?q=<%= encodeURIComponent(value) %>&field=<%= field %>" 
+              class="metadata-tag" 
+              data-type="<%= field %>" 
+              data-value="<%= value %>">
               <%= value %>
             </a>
           </li>
@@ -24,5 +28,14 @@
       </ul>
     </section>
   </div>
+<script>
+  document.querySelectorAll('.metadata-tag').forEach(tag => {
+    tag.addEventListener('click', function () {
+      const type = this.dataset.type;
+      const value = this.dataset.value;
+      logAction('click_filter', { type, value });
+    });
+  });
+</script>
 </body>
 </html>
