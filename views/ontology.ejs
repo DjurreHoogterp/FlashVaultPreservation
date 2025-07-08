@@ -55,13 +55,5 @@
           </ul>
         </section>
       </div>
-      <script>
-        document.querySelectorAll('.ontology-category-link').forEach(link => {
-          link.addEventListener('click', function () {
-            const category = this.dataset.category;
-            logAction('click_ontology_category', { category });
-          });
-        });
-      </script>
 </body>
 </html>

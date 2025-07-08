@@ -46,6 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Single page load log
   logAction("page_loaded", {});
 
+  // Ontology category clicks
+  if (pathname === "/ontology") {
+    document.querySelectorAll(".ontology-category-link").forEach(link => {
+      link.addEventListener("click", () => {
+        const category = link.dataset.category;
+        logAction("click_ontology_category", { category });
+      });
+    });
+  }
+
   // Homepage-specific events
   if (pathname === "/") {
     document.querySelectorAll(".game-tile").forEach(tile => {
@@ -74,7 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("a").forEach(link => {
     const isHandledSpecifically =
       link.classList.contains("game-tile") ||
-      link.classList.contains("upload-link");
+      link.classList.contains("upload-link") ||
+      link.classList.contains("ontology-category-link");
 
     if (!isHandledSpecifically) {
       link.addEventListener("click", () => {
