@@ -11,7 +11,7 @@ if (pid || assignment) {
   window.history.replaceState({}, "", window.location.pathname);
 }
 
-// Logging function (reusable globally)
+// Global logging function
 function logAction(action, details = {}) {
   const pid = sessionStorage.getItem("pid");
   const assignment = sessionStorage.getItem("assignment");
@@ -39,58 +39,62 @@ function logAction(action, details = {}) {
   });
 }
 
-// Log initial page load
-logAction("page_loaded", {});
-
-document.addEventListener('DOMContentLoaded', () => {
+// DOM-based logging setup
+document.addEventListener("DOMContentLoaded", () => {
   const pathname = window.location.pathname;
 
-  // Log every page load again here for DOM-based analysis
-  logAction('page_load', {});
+  // Single page load log
+  logAction("page_loaded", {});
 
-  // Homepage-specific logic
-  if (pathname === '/') {
-    document.querySelectorAll('.game-tile').forEach(tile => {
-      tile.addEventListener('click', () => {
-        const title = tile.querySelector('.tile-title')?.textContent || 'unknown';
-        logAction('click_game_tile', { title });
+  // Homepage-specific events
+  if (pathname === "/") {
+    document.querySelectorAll(".game-tile").forEach(tile => {
+      tile.addEventListener("click", () => {
+        const title = tile.querySelector(".tile-title")?.textContent || "unknown";
+        logAction("click_game_tile", { title });
       });
     });
 
-    const uploadLink = document.querySelector('.upload-link');
-    if (uploadLink) {
-      uploadLink.addEventListener('click', () => {
-        logAction('click_upload_button', {});
+    const uploadBtn = document.querySelector(".upload-link");
+    if (uploadBtn) {
+      uploadBtn.addEventListener("click", () => {
+        logAction("click_upload_button", {});
       });
     }
 
-    const aboutSummary = document.querySelector('.about-collapse summary');
-    if (aboutSummary) {
-      aboutSummary.addEventListener('click', () => {
-        logAction('toggle_about_section', {});
+    const aboutToggle = document.querySelector(".about-collapse summary");
+    if (aboutToggle) {
+      aboutToggle.addEventListener("click", () => {
+        logAction("toggle_about_section", {});
       });
     }
   }
 
-  // Universal logging for buttons
+  // Universal link logging (excluding special cases)
+  document.querySelectorAll("a").forEach(link => {
+    const isHandledSpecifically =
+      link.classList.contains("game-tile") ||
+      link.classList.contains("upload-link");
+
+    if (!isHandledSpecifically) {
+      link.addEventListener("click", () => {
+        logAction("click_link", {
+          label: link.textContent.trim().slice(0, 100),
+          href: link.getAttribute("href"),
+          id: link.id || null,
+          class: link.className || null
+        });
+      });
+    }
+  });
+
+  // Universal button logging
   document.querySelectorAll("button").forEach(btn => {
     btn.addEventListener("click", () => {
       logAction("click_button", {
-        label: btn.textContent.trim(),
+        label: btn.textContent.trim().slice(0, 100),
         id: btn.id || null,
         class: btn.className || null
-      });
-    });
-  });
-
-  // Universal logging for links
-  document.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      logAction("click_link", {
-        label: link.textContent.trim(),
-        href: link.getAttribute("href"),
-        id: link.id || null,
-        class: link.className || null
       });
     });
   });
