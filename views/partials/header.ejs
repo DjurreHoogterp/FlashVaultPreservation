@@ -1,67 +1,32 @@
 <div class="search-bar-container">
-    <div class="search-bar-content">
-      <div class="logo">
-        <a href="/">
-            <img src="/data/images/logo.png" alt="Flash Game Archive Logo" />
-          </a>
+  <div class="search-bar-content">
+    <div class="logo">
+      <a href="/">
+        <img src="/data/images/logo.png" alt="Flash Game Archive Logo" />
+      </a>
+    </div>
+    <div class="search-bar-wrapper">
+      <div class="search-bar-row">
+        <form id="search-form" action="/search" method="get" class="search-bar">
+          <input type="text" name="q" placeholder="Search for a game..." value="<%= typeof query !== 'undefined' ? query : '' %>" />/>
+          <button type="submit">Search</button>
+        </form>
+        <a href="/ontology" class="button-metadata">Browse metadata</a>
       </div>
-      <div class="search-bar-wrapper">
-        <div class="search-bar-row">
-          <form id="search-form" action="/search" method="get" class="search-bar">
-            <input type="text" name="q" placeholder="Search for a game..." />
-            <button type="submit">Search</button>
-          </form>
-          <a href="/ontology" class="button-metadata">Browse metadata</a>
-        </div>
-        <ul id="live-results" class="live-results"></ul>
-      </div>
+      <ul id="live-results" class="live-results"></ul>
     </div>
   </div>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-  
-    const pid = urlParams.get('pid');
-    const assignment = urlParams.get('assignment');
-  
-    if (pid) sessionStorage.setItem('pid', pid);
-    if (assignment) sessionStorage.setItem('assignment', assignment);
-  
-    //clean up the visible URL
-    if (pid || assignment) {
-      window.history.replaceState({}, "", window.location.pathname);
-    }
-    function logAction(action, details = {}) {
-    const pid = sessionStorage.getItem("pid");
-    const assignment = sessionStorage.getItem("assignment");
+</div>
 
-    if (!pid) {
-      console.warn("logAction skipped — missing PID");
-      return;
-    }
+<!-- Logging logic -->
+<script src="/js/logging.js"></script>
 
-    const payload = {
-      pid,
-      assignment,
-      action,
-      details,
-      page: window.location.pathname,
-      timestamp: new Date().toISOString()
-    };
-
-    console.log("Logging action:", payload);
-
-    fetch("/log-action", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-  }
+<script>
   const searchForm = document.getElementById("search-form");
-
   if (searchForm) {
-    searchForm.addEventListener("submit", function (e) {
+    searchForm.addEventListener("submit", function () {
       const query = this.q.value;
       logAction("search", { query });
     });
   }
-  </script>
+</script>
