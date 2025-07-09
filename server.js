@@ -282,8 +282,13 @@ app.get('/search', (req, res) => {
       
       // Map back to full original game object (not the flattened one)
       results = rawResults.map(r => games.find(g => g.id === r.item.id));
-      
   }
+
+  const yearMatch = query.match(/^\b\d{4}\b$/);
+  if (yearMatch && query.trim().length === 4) {
+  // Only filter if query is just "2009" for exaple
+  results = games.filter(g => String(g.year) === yearMatch[0]);
+}
 
   res.render('search', { query, field, results });
 });
