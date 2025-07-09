@@ -215,3 +215,30 @@ window.addEventListener("beforeunload", () => {
 
   logAction("page_unload", payload);
 });
+
+//rage clicks
+let clickTimestamps = [];
+
+document.addEventListener("click", (e) => {
+  const now = Date.now();
+  clickTimestamps.push(now);
+
+  // Keep last 1 second of clicks
+  clickTimestamps = clickTimestamps.filter(ts => now - ts < 1000);
+
+  if (clickTimestamps.length >= 3) {
+    logAction("rage_click_detected", {
+      count: clickTimestamps.length,
+      target: {
+        tag: e.target.tagName,
+        id: e.target.id || null,
+        class: e.target.className || null,
+        text: e.target.textContent?.trim().slice(0, 100)
+      }
+    });
+
+    // Reset after logging to avoid duplicates
+    clickTimestamps = [];
+  }
+});
+
