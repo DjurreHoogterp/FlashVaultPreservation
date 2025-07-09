@@ -69,6 +69,15 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+  //interactions with the ruffle container
+const ruffleContainer = document.getElementById("ruffle-container");
+if (ruffleContainer) {
+  ruffleContainer.addEventListener("click", () => {
+    logAction("play_clicked_on_game", {
+      gameId: ruffleContainer.dataset.gameId || "unknown"
+    });
+  });
+}
 
   // Homepage-specific events
   if (pathname === "/") {
@@ -136,8 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+  
+// Track scroll progress
 let maxScrollDepth = 0;
-
 function updateScrollDepth() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -148,37 +158,18 @@ function updateScrollDepth() {
     }
   }
 }
+window.addEventListener("scroll", updateScrollDepth, { passive: true });
 
-// Track during scroll
-window.addEventListener("scroll", () => {
-  updateScrollDepth();
-}, { passive: true });
-
-// Log once when user leaves the page
-window.addEventListener("beforeunload", () => {
-  if (maxScrollDepth > 0) {
-    logAction("scroll_depth", { percent: maxScrollDepth });
-  }
-});
-
-  
-
-
-//interactions with the ruffle container
-const ruffleContainer = document.getElementById("ruffle-container");
-if (ruffleContainer) {
-  ruffleContainer.addEventListener("click", () => {
-    logAction("play_clicked_on_game", {
-      gameId: ruffleContainer.dataset.gameId || "unknown"
-    });
-  });
-}
-
-
-//dwelltime tracke (time spent on page)
+// Track time spent
 let pageLoadTime = Date.now();
 
+// Unified unload logger
 window.addEventListener("beforeunload", () => {
   const timeSpent = Math.round((Date.now() - pageLoadTime) / 1000);
-  logAction("Time_On_Page", { timeSpentSeconds: timeSpent });
+  const payload = {
+    timeSpentSeconds: timeSpent,
+    scrollPercent: maxScrollDepth
+  };
+
+  logAction("page_unload", payload);
 });
