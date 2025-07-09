@@ -69,6 +69,22 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+
+  // Hovering over metadata links (same selector as for click)
+document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      const url = new URL(link.href, window.location.origin);
+      const query = url.searchParams.get('q');
+      const field = url.searchParams.get('field');
+  
+      logAction('hover_metadata_link', {
+        field,
+        value: query,
+        href: link.getAttribute('href')
+      });
+    });
+  });
+  
   //interactions with the ruffle container
 const ruffleContainer = document.getElementById("ruffle-container");
 if (ruffleContainer) {
