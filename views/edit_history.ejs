@@ -19,7 +19,7 @@
           <h3>
             <%= edit.title || 'Unknown Game' %>
             <small style="display:block; font-size:0.7rem; color:#ccc;">
-              Edited at <%= edit.edited_at %> from IP <%= edit.editor_ip %>
+              Edited at <%= edit.edited_at %> by PID <%= edit.editor_pid || 'unknown' %>
             </small>
           </h3>
 

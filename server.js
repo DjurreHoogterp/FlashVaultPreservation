@@ -297,7 +297,6 @@ app.get('/api/games-preview', (req, res) => {
 
   res.json(games);
 });
-
 // Edit Metadata page
 app.get('/edit/:id', (req, res) => {
   const stmt = db.prepare('SELECT * FROM games WHERE id = ?');
@@ -318,18 +317,18 @@ app.get('/edit/:id', (req, res) => {
   res.render('edit', { game });
 });
 
-// EDITING PAGE
+// UPDATED TABLE: rename `editor_ip` → `pid`
 db.prepare(`
   CREATE TABLE IF NOT EXISTS game_edits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     game_id TEXT,
     edited_at TEXT,
-    editor_ip TEXT,
+    pid TEXT,
     changes TEXT
-)
+  )
 `).run();
 
-
+// SAVE EDIT
 app.post('/edit/:id', (req, res) => {
   const gameId = req.params.id;
   const input = req.body;
@@ -342,8 +341,6 @@ app.post('/edit/:id', (req, res) => {
     'genre', 'theme', 'controls', 'mechanics', 'emotion',
     'character', 'weapons', 'platform', 'similar_titles', 'multiplayer_mode' 
   ];
-
-  
 
   // Convert comma-separated strings to arrays
   const game = { ...input };
@@ -388,7 +385,7 @@ app.post('/edit/:id', (req, res) => {
     id: gameId
   });
 
-  // Optional: save edit history (diff log)
+  // Save edit history (diff log)
   const changes = {};
   for (const key in game) {
     const oldVal = oldGame[key];
@@ -398,17 +395,19 @@ app.post('/edit/:id', (req, res) => {
     }
   }
 
+  const pid = input.pid || 'unknown';
+
   if (Object.keys(changes).length > 0) {
     db.prepare(`
-      INSERT INTO game_edits (game_id, edited_at, editor_ip, changes)
+      INSERT INTO game_edits (game_id, edited_at, pid, changes)
       VALUES (?, datetime('now'), ?, ?)
-    `).run(gameId, req.ip, JSON.stringify(changes));
+    `).run(gameId, pid, JSON.stringify(changes));
   }
 
   res.redirect(`/play/${gameId}`);
 });
 
-// editing history
+// EDITING HISTORY
 app.get('/edit-history/:id', (req, res) => {
   const gameId = req.params.id;
 
@@ -427,6 +426,7 @@ app.get('/edit-history/:id', (req, res) => {
 
   res.render('edit_history', { edits });
 });
+
 
 // Upload a new game
 const multer = require('multer');

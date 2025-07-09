@@ -7,12 +7,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+  <script>
+    const pid = sessionStorage.getItem("pid");
+    if (pid) {
+      document.getElementById("pid-field").value = pid;
+    }
+  </script>
   <div class="page-container">
     <%- include('partials/header.ejs') %>
 
     <h1>Edit game metadata for: <%= game.title %></h1>
     <button onclick="history.back()" class="details-button">Go back</button>
     <form action="/edit/<%= game.id %>" method="POST" class="edit-form">
+
+      <input type="hidden" name="pid" id="pid-field" />
       <label>Title:</label>
       <input type="text" name="title" value="<%= game.title %>" required>
 
