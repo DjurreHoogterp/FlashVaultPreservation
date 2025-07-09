@@ -2,7 +2,10 @@ const express = require('express');
 const Database = require('better-sqlite3');
 const app = express();
 const db = new Database('games.db');
+const fs = require('fs');
 const path = require('path');
+const backupDir = path.join('/data', 'log-backups');
+fs.mkdirSync(backupDir, { recursive: true });
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,11 +44,10 @@ app.use((req, res, next) => {
 });
 app.use(express.json()); // needed to parse JSON body
 
-const fs = require('fs');
 //Admin page
 
 app.get('/admin/logs', (req, res) => {
-  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  const logPath = path.join('/data', 'session-log.json');
   if (!fs.existsSync(logPath)) return res.render('admin', { logsByPid: {}, logsRaw: '[]' });
 
   const raw = fs.readFileSync(logPath, 'utf-8').split('\n').filter(Boolean);
@@ -61,7 +63,7 @@ app.get('/admin/logs', (req, res) => {
 });
 
 app.post('/admin/download', (req, res) => {
-  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  const logPath = path.join('/data', 'session-log.json');
   if (!fs.existsSync(logPath)) return res.status(404).send('Log file not found.');
 
   res.download(logPath, 'session-log.json');
@@ -90,7 +92,7 @@ app.post('/log-action', express.json(), (req, res) => {
   sessionMap[pid].actions.push(entry);
 
   // File-based log
-  const logPath = path.join(__dirname, 'logs', 'session-log.json');
+  const logPath = path.join('/data', 'session-log.json');
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
 
   fs.appendFile(logPath, JSON.stringify(entry) + '\n', (err) => {
