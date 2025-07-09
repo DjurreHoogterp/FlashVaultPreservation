@@ -6,12 +6,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Varela+Round&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
-  
-  <!-- Load Ruffle from CDN -->
   <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-
-  <!-- Local config loader -->
-  <!-- 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 -->
   <script src="/js/ruffle.js"></script>
 </head>
 <body>
@@ -28,7 +23,7 @@
       <a href="#game-info" class="details-button">More details about this game</a>
     </div>
 
-    <div class="game-player">
+    <div class="game-player" id="ruffle-container">
       <object
         type="application/x-shockwave-flash"
         data="/games/<%= game.file %>"

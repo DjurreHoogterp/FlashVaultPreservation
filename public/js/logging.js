@@ -145,7 +145,19 @@ window.addEventListener("beforeunload", () => {
   }
 });
 
-//dwelltime tracker
+
+//interactions with the ruffle container
+const ruffleContainer = document.getElementById("ruffle-container");
+if (ruffleContainer) {
+  ruffleContainer.addEventListener("click", () => {
+    logAction("play_clicked_on_game", {
+      gameId: ruffleContainer.dataset.gameId || "unknown"
+    });
+  });
+}
+
+
+//dwelltime tracke (time spent on page)
 let pageLoadTime = Date.now();
 
 window.addEventListener("beforeunload", () => {
