@@ -120,37 +120,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const scrollMilestones = [25, 50, 75, 100];
+const loggedMilestones = new Set();
 
-// OPTINOAL MAYBE DELETE RAGE CLICK
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const fullHeight = document.body.scrollHeight;
 
+  const scrolledPercent = Math.min(
+    100,
+    Math.floor(((scrollTop + viewportHeight) / fullHeight) * 100)
+  );
 
-let lastClickTime = 0;
-let clickCount = 0;
-let lastTarget = null;
-
-document.addEventListener("click", function (event) {
-  const now = Date.now();
-  const target = event.target;
-
-  // Compare target and time
-  if (target === lastTarget && now - lastClickTime < 1000) {
-    clickCount++;
-  } else {
-    clickCount = 1;
-  }
-
-  lastClickTime = now;
-  lastTarget = target;
-
-  // Rage click detected
-  if (clickCount >= 3) {
-    logAction("rage_click", {
-      label: target.textContent.trim().slice(0, 100),
-      id: target.id || null,
-      class: target.className || null,
-      tag: target.tagName
-    });
-    // Reset count to avoid duplicate logs
-    clickCount = 0;
-  }
+  scrollMilestones.forEach(percent => {
+    if (scrolledPercent >= percent && !loggedMilestones.has(percent)) {
+      logAction("scroll_depth", { percent });
+      loggedMilestones.add(percent);
+    }
+  });
 });
