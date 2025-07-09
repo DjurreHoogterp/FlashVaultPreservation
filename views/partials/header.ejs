@@ -20,13 +20,3 @@
 
 <!-- Logging logic -->
 <script src="/js/logging.js"></script>
-
-<script>
-  const searchForm = document.getElementById("search-form");
-  if (searchForm) {
-    searchForm.addEventListener("submit", function () {
-      const query = this.q.value;
-      logAction("search", { query });
-    });
-  }
-</script>
