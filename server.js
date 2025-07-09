@@ -270,18 +270,25 @@ app.get('/search', (req, res) => {
       ? [field]
       : searchFields;
 
-    const fuse = new Fuse(games.map(flattenGame), {
-      keys,
-      threshold: 0.4
-    });
+      const flattenedGames = games.map(flattenGame);
 
-    results = fuse.search(query).map(r => games.find(g => g.id === r.item.id));
-
-    // If query contains a 4-digit year (e.g. "fireboy 2009"), filter Fuse results by year
-    const yearMatch = query.match(/\b\d{4}\b/);
-    if (yearMatch) {
-      results = results.filter(g => String(g.year) === yearMatch[0]);
-    }
+      const fuse = new Fuse(flattenedGames, {
+        keys: [...searchFields, 'year'],
+        threshold: 0.4
+      });
+      
+      let rawResults = fuse.search(query);
+      
+      // Check for exact year mention in query (e.g., "2008")
+      const yearMatch = query.match(/\b\d{4}\b/);
+      if (yearMatch) {
+        const year = yearMatch[0];
+        rawResults = rawResults.filter(r => String(r.item.year) === year);
+      }
+      
+      // Map back to full original game object (not the flattened one)
+      results = rawResults.map(r => games.find(g => g.id === r.item.id));
+      
   }
 
   res.render('search', { query, field, results });
