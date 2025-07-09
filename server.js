@@ -36,7 +36,8 @@ app.use((req, res, next) => {
     if (!sessionMap[pid]) {
       sessionMap[pid] = {
         startedAt: new Date(),
-        actions: []
+        actions: [],
+        localEdits: {}
       };
       console.log(`Session started for PID: ${pid}`);
     }
@@ -144,7 +145,20 @@ app.get('/play/:id', (req, res) => {
       game[field] = [];
     }
   });
-
+  if (req.pid && sessionMap[req.pid]?.localEdits?.[game.id]) {
+    const edits = sessionMap[req.pid].localEdits[game.id];
+    for (const key in edits) {
+      try {
+        if (jsonFields.includes(key)) {
+          game[key] = JSON.parse(edits[key] || '[]');
+        } else {
+          game[key] = edits[key];
+        }
+      } catch {
+        // Ignore malformed local override
+      }
+    }
+  }
   res.render('play', { game });
 });
 
@@ -314,7 +328,7 @@ app.get('/edit/:id', (req, res) => {
     }
   });
 
-  res.render('edit', { game });
+  res.render('edit', { game, pid: req.query.pid || '', assignment: req.query.assignment || '' });
 });
 
 // UPDATED TABLE: rename `editor_ip` → `pid`
@@ -380,10 +394,37 @@ app.post('/edit/:id', (req, res) => {
     WHERE id = @id
   `);
 
-  stmt.run({
-    ...game,
-    id: gameId
-  });
+  if (pid && sessionMap[pid]) {
+    // Store locally in memory (overrides only for this session)
+    const localEdits = {};
+    for (const key in game) {
+      const oldVal = oldGame[key];
+      const newVal = game[key];
+      if (typeof oldVal === 'string' && typeof newVal === 'string' && oldVal !== newVal) {
+        localEdits[key] = newVal;
+      }
+    }
+    sessionMap[pid].localEdits[gameId] = localEdits;
+  
+    // Log the local edit
+    const logPath = path.join('/data', 'session-log.json');
+    const entry = {
+      timestamp: new Date().toISOString(),
+      pid,
+      assignment: input.assignment || null,
+      page: 'edit',
+      action: 'local_metadata_edit',
+      details: {
+        gameId,
+        changes: localEdits
+      }
+    };
+    fs.appendFileSync(logPath, JSON.stringify(entry) + '\n');
+  } else {
+    // Fall back to canonical DB save
+    stmt.run({ ...game, id: gameId });
+  }
+  
 
   // Save edit history (diff log)
   const changes = {};
