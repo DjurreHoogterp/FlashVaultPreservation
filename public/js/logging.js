@@ -120,23 +120,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-const scrollMilestones = [25, 50, 75, 100];
-const loggedMilestones = new Set();
+let maxScrollDepth = 0;
 
-window.addEventListener("scroll", () => {
+function updateScrollDepth() {
   const scrollTop = window.scrollY;
-  const viewportHeight = window.innerHeight;
-  const fullHeight = document.body.scrollHeight;
-
-  const scrolledPercent = Math.min(
-    100,
-    Math.floor(((scrollTop + viewportHeight) / fullHeight) * 100)
-  );
-
-  scrollMilestones.forEach(percent => {
-    if (scrolledPercent >= percent && !loggedMilestones.has(percent)) {
-      logAction("scroll_depth", { percent });
-      loggedMilestones.add(percent);
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  if (docHeight > 0) {
+    const depth = Math.round((scrollTop / docHeight) * 100);
+    if (depth > maxScrollDepth) {
+      maxScrollDepth = depth;
     }
-  });
+  }
+}
+
+// Track during scroll
+window.addEventListener("scroll", () => {
+  updateScrollDepth();
+}, { passive: true });
+
+// Log once when user leaves the page
+window.addEventListener("beforeunload", () => {
+  if (maxScrollDepth > 0) {
+    logAction("scroll_depth", { percent: maxScrollDepth });
+  }
 });
