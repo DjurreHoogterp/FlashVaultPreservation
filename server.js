@@ -19,11 +19,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 
 
-// reset database quickly
-const logPath = path.join('/data', 'session-log.json');
-fs.writeFileSync(logPath, '', 'utf8');  // Clears the file content
-console.log('session-log.json has been cleared!');
-
 // Homepage: show 3 random games
 app.get('/', (req, res) => {
   const stmt = db.prepare('SELECT * FROM games ORDER BY RANDOM() LIMIT 3');
