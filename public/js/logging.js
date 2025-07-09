@@ -55,6 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+  //log when user clicks metadata links
+    document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
+    link.addEventListener('click', () => {
+      const url = new URL(link.href, window.location.origin);
+      const query = url.searchParams.get('q');
+      const field = url.searchParams.get('field');
+  
+      logAction('click_metadata_link', {
+        field,
+        value: query,
+        href: link.getAttribute('href')
+      });
+    });
+  });
 
   // Homepage-specific events
   if (pathname === "/") {
@@ -147,20 +161,6 @@ window.addEventListener("beforeunload", () => {
   }
 });
 
-//log when user clicks metadata links
-document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
-    link.addEventListener('click', () => {
-      const url = new URL(link.href, window.location.origin);
-      const query = url.searchParams.get('q');
-      const field = url.searchParams.get('field');
-  
-      logAction('click_metadata_link', {
-        field,
-        value: query,
-        href: link.getAttribute('href')
-      });
-    });
-  });
   
 
 
