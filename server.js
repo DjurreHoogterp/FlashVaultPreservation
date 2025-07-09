@@ -250,7 +250,7 @@ app.get('/search', (req, res) => {
     similar_titles: Array.isArray(game.similar_titles) ? game.similar_titles.join(' ') : game.similar_titles,
     weapons: Array.isArray(game.weapons) ? game.weapons.join(' ') : game.weapons,
     multiplayer_mode: Array.isArray(game.multiplayer_mode) ? game.multiplayer_mode.join(' ') : game.multiplayer_mode || '',
-    year: game.year
+    year: String(game.year)
   });
 
   const searchFields = [
