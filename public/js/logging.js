@@ -144,3 +144,11 @@ window.addEventListener("beforeunload", () => {
     logAction("scroll_depth", { percent: maxScrollDepth });
   }
 });
+
+//dwelltime tracker
+let pageLoadTime = Date.now();
+
+window.addEventListener("beforeunload", () => {
+  const timeSpent = Math.round((Date.now() - pageLoadTime) / 1000);
+  logAction("page_unload", { timeSpentSeconds: timeSpent });
+});
