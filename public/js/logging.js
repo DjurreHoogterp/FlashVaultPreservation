@@ -119,3 +119,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+// OPTINOAL MAYBE DELETE RAGE CLICK
+
+
+let lastClickTime = 0;
+let clickCount = 0;
+let lastTarget = null;
+
+document.addEventListener("click", function (event) {
+  const now = Date.now();
+  const target = event.target;
+
+  // Compare target and time
+  if (target === lastTarget && now - lastClickTime < 1000) {
+    clickCount++;
+  } else {
+    clickCount = 1;
+  }
+
+  lastClickTime = now;
+  lastTarget = target;
+
+  // Rage click detected
+  if (clickCount >= 3) {
+    logAction("rage_click", {
+      label: target.textContent.trim().slice(0, 100),
+      id: target.id || null,
+      class: target.className || null,
+      tag: target.tagName
+    });
+    // Reset count to avoid duplicate logs
+    clickCount = 0;
+  }
+});
