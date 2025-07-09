@@ -1,7 +1,7 @@
 const express = require('express');
 const Database = require('better-sqlite3');
 const app = express();
-const db = new Database('/data/games.db');
+const db = new Database('games.db');
 const fs = require('fs');
 const path = require('path');
 // create back-up folder
