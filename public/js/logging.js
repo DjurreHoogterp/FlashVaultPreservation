@@ -79,9 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-  const isMetadataLink = link.getAttribute("href")?.startsWith("/search?q=");
+
   // Universal link logging (excluding special cases)
   document.querySelectorAll("a").forEach(link => {
+    const isMetadataLink = link.getAttribute("href")?.startsWith("/search?q=");
     const isHandledSpecifically =
       link.classList.contains("game-tile") ||
       link.classList.contains("upload-link") ||
