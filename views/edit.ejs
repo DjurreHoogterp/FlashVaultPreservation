@@ -21,6 +21,7 @@
     <form action="/edit/<%= game.id %>" method="POST" class="edit-form">
 
       <input type="hidden" name="pid" id="pid-field" />
+      <input type="hidden" name="assignment" value="<%= assignment %>">
       <label>Title:</label>
       <input type="text" name="title" value="<%= game.title %>" required>
 
