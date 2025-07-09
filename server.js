@@ -346,6 +346,7 @@ db.prepare(`
 app.post('/edit/:id', (req, res) => {
   const gameId = req.params.id;
   const input = req.body;
+  const pid = input.pid || null;
 
   const oldGame = db.prepare('SELECT * FROM games WHERE id = ?').get(gameId);
   if (!oldGame) return res.status(404).send('Game not found');
