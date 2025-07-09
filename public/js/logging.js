@@ -11,6 +11,20 @@ if (pid || assignment) {
   window.history.replaceState({}, "", window.location.pathname);
 }
 
+function logHoverWithDelay(element, logType, dataFn, delay = 500) {
+    let timer;
+  
+    element.addEventListener('mouseenter', () => {
+      timer = setTimeout(() => {
+        logAction(logType, dataFn());
+      }, delay);
+    });
+  
+    element.addEventListener('mouseleave', () => {
+      clearTimeout(timer);
+    });
+  }
+
 // Global logging function
 function logAction(action, details = {}) {
   const pid = sessionStorage.getItem("pid");
@@ -72,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hovering over metadata links (same selector as for click)
 document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
-    link.addEventListener('mouseenter', () => {
+    logHoverWithDelay(link, 'hover_metadata_link', () =>{
       const url = new URL(link.href, window.location.origin);
       const query = url.searchParams.get('q');
       const field = url.searchParams.get('field');
@@ -87,7 +101,7 @@ document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
 
 // hovering over buttons
   document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
+    logHoverWithDelay(btn, 'hover_button', () => {
       logAction('hover_button', {
         label: btn.textContent.trim().slice(0, 100),
         id: btn.id || null,
