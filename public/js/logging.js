@@ -79,13 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-
+  const isMetadataLink = link.getAttribute("href")?.startsWith("/search?q=");
   // Universal link logging (excluding special cases)
   document.querySelectorAll("a").forEach(link => {
     const isHandledSpecifically =
       link.classList.contains("game-tile") ||
       link.classList.contains("upload-link") ||
-      link.classList.contains("ontology-category-link");
+      link.classList.contains("ontology-category-link") ||
+      isMetadataLink;
 
     if (!isHandledSpecifically) {
       link.addEventListener("click", () => {
@@ -144,6 +145,22 @@ window.addEventListener("beforeunload", () => {
     logAction("scroll_depth", { percent: maxScrollDepth });
   }
 });
+
+//log when user clicks metadata links
+document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
+    link.addEventListener('click', () => {
+      const url = new URL(link.href, window.location.origin);
+      const query = url.searchParams.get('q');
+      const field = url.searchParams.get('field');
+  
+      logAction('click_metadata_link', {
+        field,
+        value: query,
+        href: link.getAttribute('href')
+      });
+    });
+  });
+  
 
 
 //interactions with the ruffle container
