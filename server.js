@@ -436,7 +436,7 @@ app.post('/edit/:id', (req, res) => {
     }
   }
 
-  const editPid = input.pid || 'unknown';
+  const editPid = req.pid || 'unknown';
 
   if (Object.keys(changes).length > 0) {
     db.prepare(`
