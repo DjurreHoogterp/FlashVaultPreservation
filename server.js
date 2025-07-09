@@ -436,13 +436,13 @@ app.post('/edit/:id', (req, res) => {
     }
   }
 
-  const pid = input.pid || 'unknown';
+  const editPid = input.pid || 'unknown';
 
   if (Object.keys(changes).length > 0) {
     db.prepare(`
       INSERT INTO game_edits (game_id, edited_at, pid, changes)
       VALUES (?, datetime('now'), ?, ?)
-    `).run(gameId, pid, JSON.stringify(changes));
+    `).run(gameId, editPid, JSON.stringify(changes));
   }
 
   res.redirect(`/play/${gameId}`);
