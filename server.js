@@ -256,7 +256,7 @@ app.get('/search', (req, res) => {
   const searchFields = [
     'title', 'description', 'mechanics', 'controls',
     'setting', 'visual_style', 'difficulty', 'emotion',
-    'platform', 'character', 'genre', 'theme',
+    'platform', 'character', 'genre', 'theme', 'perspective',
     'multiplayer_mode', 'similar_titles', 'weapons'
   ];
 
