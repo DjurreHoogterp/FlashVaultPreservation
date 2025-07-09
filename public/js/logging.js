@@ -84,7 +84,19 @@ document.querySelectorAll('a[href^="/search?q="]').forEach(link => {
       });
     });
   });
+
+// hovering over buttons
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+      logAction('hover_button', {
+        label: btn.textContent.trim().slice(0, 100),
+        id: btn.id || null,
+        class: btn.className || null
+      });
+    });
+  });
   
+
   //interactions with the ruffle container
 const ruffleContainer = document.getElementById("ruffle-container");
 if (ruffleContainer) {
