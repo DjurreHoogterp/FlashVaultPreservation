@@ -250,7 +250,7 @@ app.get('/search', (req, res) => {
     similar_titles: Array.isArray(game.similar_titles) ? game.similar_titles.join(' ') : game.similar_titles,
     weapons: Array.isArray(game.weapons) ? game.weapons.join(' ') : game.weapons,
     multiplayer_mode: Array.isArray(game.multiplayer_mode) ? game.multiplayer_mode.join(' ') : game.multiplayer_mode || '',
-    year: String(game.year),
+    year: String(game.year || ''),
     perspective: game.perspective || ''
   });
 
@@ -279,13 +279,6 @@ app.get('/search', (req, res) => {
       });
       
       let rawResults = fuse.search(query);
-      
-      // Check for exact year mention in query (e.g., "2008")
-      const yearMatch = query.match(/\b\d{4}\b/);
-      if (yearMatch) {
-        const year = yearMatch[0];
-        rawResults = rawResults.filter(r => String(r.item.year) === year);
-      }
       
       // Map back to full original game object (not the flattened one)
       results = rawResults.map(r => games.find(g => g.id === r.item.id));
