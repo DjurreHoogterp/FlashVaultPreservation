@@ -10,7 +10,7 @@ if (fs.existsSync('/data')) {
   fs.mkdirSync(backupDir, { recursive: true });
   console.log('/data/log-backups folder created (or already exists)');
 } else {
-  console.warn('⚠️ /data not available – persistent disk not mounted');
+  console.warn('/data not available persistent disk not mounted');
 }
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -259,7 +259,7 @@ app.get('/search', (req, res) => {
     'title', 'description', 'mechanics', 'controls',
     'setting', 'visual_style', 'difficulty', 'emotion',
     'platform', 'character', 'genre', 'theme', 'perspective',
-    'multiplayer_mode', 'similar_titles', 'weapons', 'game_series'
+    'multiplayer_mode', 'similar_titles', 'weapons', 'series_name'
   ];
 
   let results = [];
