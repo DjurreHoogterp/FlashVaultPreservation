@@ -584,7 +584,18 @@ app.get('/ontology/:field', (req, res) => {
 });
 
 //adding games:
-app.get('/admin/seed-game', (req, res) => {
+app.get('/admin/seed-batch', (req, res) => {
+  const filePath = path.join(__dirname, 'data', 'games-seed.json');
+  if (!fs.existsSync(filePath)) return res.status(404).send('Seed file not found');
+
+  const rawData = fs.readFileSync(filePath, 'utf-8');
+  let games;
+  try {
+    games = JSON.parse(rawData);
+  } catch (e) {
+    return res.status(500).send('Invalid JSON format');
+  }
+
   const stmt = db.prepare(`
     INSERT OR REPLACE INTO games (
       id, title, description, file, genre, theme, controls,
@@ -599,38 +610,27 @@ app.get('/admin/seed-game', (req, res) => {
     )
   `);
 
-  const game = {
-    id: "my-friend-pedro",
-    title: "My Friend Pedro",
-    description: "A stylish side-scrolling shooter where you unleash acrobatic gunplay to dispatch enemies at the command of a sentient banana.",
-    file: "my-friend-pedro.swf",
-    genre: JSON.stringify(["Shooter", "Action"]),
-    theme: JSON.stringify(["Violence", "Slow-motion", "Surrealism"]),
-    controls: JSON.stringify(["Arrow Keys", "Mouse"]),
-    multiplayer_mode: JSON.stringify([]),
-    series_link: "",
-    series_name: "",
-    similar_titles: JSON.stringify(["Thing Thing", "Strike Force Heroes"]),
-    weapons: JSON.stringify(["Guns", "Explosives"]),
-    mechanics: JSON.stringify(["slow motion", "acrobatic moves", "shooting"]),
-    setting: "urban warehouse",
-    visual_style: "cartoon-bloody",
-    perspective: "2D side-scrolling",
-    difficulty: "hard",
-    emotion: JSON.stringify(["intensity", "satisfaction"]),
-    character: JSON.stringify(["masked shooter"]),
-    year: "2014",
-    platform: JSON.stringify(["Adult Swim", "Silvergames"]),
-    image: "my-friend-pedro.png",
-    background_image: ""
-  };
-
   try {
-    stmt.run(game);
-    res.send("✅ Game inserted successfully");
+    for (const g of games) {
+      stmt.run({
+        ...g,
+        genre: JSON.stringify(g.genre || []),
+        theme: JSON.stringify(g.theme || []),
+        controls: JSON.stringify(g.controls || []),
+        multiplayer_mode: JSON.stringify(g.multiplayer_mode || []),
+        similar_titles: JSON.stringify(g.similar_titles || []),
+        weapons: JSON.stringify(g.weapons || []),
+        mechanics: JSON.stringify(g.mechanics || []),
+        emotion: JSON.stringify(g.emotion || []),
+        platform: JSON.stringify(g.platform || []),
+        character: JSON.stringify(g.character || [])
+      });
+    }
+
+    res.send(`✅ Inserted ${games.length} games into the database.`);
   } catch (e) {
     console.error(e);
-    res.status(500).send("❌ Error inserting game");
+    res.status(500).send('Error inserting games');
   }
 });
 
