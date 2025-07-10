@@ -634,6 +634,12 @@ app.get('/admin/seed-batch', (req, res) => {
   }
 });
 
+app.get('/admin/delete-testgame', (req, res) => {
+  const stmt = db.prepare('DELETE FROM games WHERE id = ?');
+  const result = stmt.run('Testgame');
+  res.send(`Deleted ${result.changes} row(s).`);
+});
+
 
 // Start server
 app.listen(3000, () => {
