@@ -269,20 +269,25 @@ app.get('/search', (req, res) => {
   } else {
     const keys = field && [...searchFields, 'year'].includes(field)
       ? [field]
-      : searchFields;
-
-      const flattenedGames = games.map(flattenGame);
-
-      const fuse = new Fuse(flattenedGames, {
-        keys: [...searchFields, 'year'],
-        threshold: 0.4
+      : [...searchFields, 'year'];
+  
+    const flattenedGames = games.map(flattenGame);
+    const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  
+    let resultSet = flattenedGames;
+  
+    tokens.forEach(token => {
+      const fuse = new Fuse(resultSet, {
+        keys,
+        threshold: 0.4,
+        ignoreLocation: true
       });
-      
-      let rawResults = fuse.search(query);
-      
-      // Map back to full original game object (not the flattened one)
-      results = rawResults.map(r => games.find(g => g.id === r.item.id));
+      resultSet = fuse.search(token).map(r => r.item);
+    });
+  
+    results = resultSet.map(flat => games.find(g => g.id === flat.id));
   }
+  
 
   const yearMatch = query.match(/^\b\d{4}\b$/);
   if (yearMatch && query.trim().length === 4) {
