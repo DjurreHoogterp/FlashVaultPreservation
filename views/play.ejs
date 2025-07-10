@@ -138,9 +138,9 @@
       
         <h3>Related & Series</h3>
       
-        <% if (game.series_link) { %>
+        <% if (game.series_name) { %>
           <li><strong>Part of Series:</strong>
-            <a href="<%= game.series_link %>"><%= game.series_name %></a>
+            <a href="/search?q=<%= encodeURIComponent(game.series_name) %>"><%= game.series_name %></a>
           </li>
         <% } %>
       

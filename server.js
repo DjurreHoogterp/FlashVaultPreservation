@@ -219,7 +219,7 @@ app.get('/search', (req, res) => {
   const jsonFields = [
     'mechanics', 'controls', 'emotion',
     'platform', 'similar_titles', 'weapons',
-    'character', 'genre', 'theme', 'multiplayer_mode'
+    'character', 'genre', 'theme', 'multiplayer_mode', 'game_series'
   ];
 
   const games = rows.map(row => {
@@ -251,14 +251,15 @@ app.get('/search', (req, res) => {
     weapons: Array.isArray(game.weapons) ? game.weapons.join(' ') : game.weapons,
     multiplayer_mode: Array.isArray(game.multiplayer_mode) ? game.multiplayer_mode.join(' ') : game.multiplayer_mode || '',
     year: String(game.year || ''),
-    perspective: game.perspective || ''
+    perspective: game.perspective || '',
+    series_name: game.series_name || ''
   });
 
   const searchFields = [
     'title', 'description', 'mechanics', 'controls',
     'setting', 'visual_style', 'difficulty', 'emotion',
     'platform', 'character', 'genre', 'theme', 'perspective',
-    'multiplayer_mode', 'similar_titles', 'weapons'
+    'multiplayer_mode', 'similar_titles', 'weapons', 'game_series'
   ];
 
   let results = [];
