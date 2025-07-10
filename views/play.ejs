@@ -122,7 +122,7 @@
         <% } %>
       
         <% if (game.weapons?.length) { %>
-          <li><strong>Weapons:</strong>
+          <li><strong>Weapons / tools:</strong>
             <% game.weapons.forEach((weapon, i) => { %>
               <a href="/search?q=<%= encodeURIComponent(weapon) %>&field=weapons"><%= weapon %></a><%= i < game.weapons.length - 1 ? ', ' : '' %>
             <% }) %>
