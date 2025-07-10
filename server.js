@@ -583,6 +583,58 @@ app.get('/ontology/:field', (req, res) => {
   res.render('ontology_field', { field, values: sortedValues });
 });
 
+//adding games:
+app.get('/admin/seed-game', (req, res) => {
+  const stmt = db.prepare(`
+    INSERT OR REPLACE INTO games (
+      id, title, description, file, genre, theme, controls,
+      multiplayer_mode, series_link, series_name, similar_titles,
+      weapons, mechanics, setting, visual_style, perspective,
+      difficulty, emotion, character, year, platform, image, background_image
+    ) VALUES (
+      @id, @title, @description, @file, @genre, @theme, @controls,
+      @multiplayer_mode, @series_link, @series_name, @similar_titles,
+      @weapons, @mechanics, @setting, @visual_style, @perspective,
+      @difficulty, @emotion, @character, @year, @platform, @image, @background_image
+    )
+  `);
+
+  const game = {
+    id: "my-friend-pedro",
+    title: "My Friend Pedro",
+    description: "A stylish side-scrolling shooter where you unleash acrobatic gunplay to dispatch enemies at the command of a sentient banana.",
+    file: "my-friend-pedro.swf",
+    genre: JSON.stringify(["Shooter", "Action"]),
+    theme: JSON.stringify(["Violence", "Slow-motion", "Surrealism"]),
+    controls: JSON.stringify(["Arrow Keys", "Mouse"]),
+    multiplayer_mode: JSON.stringify([]),
+    series_link: "",
+    series_name: "",
+    similar_titles: JSON.stringify(["Thing Thing", "Strike Force Heroes"]),
+    weapons: JSON.stringify(["Guns", "Explosives"]),
+    mechanics: JSON.stringify(["slow motion", "acrobatic moves", "shooting"]),
+    setting: "urban warehouse",
+    visual_style: "cartoon-bloody",
+    perspective: "2D side-scrolling",
+    difficulty: "hard",
+    emotion: JSON.stringify(["intensity", "satisfaction"]),
+    character: JSON.stringify(["masked shooter"]),
+    year: "2014",
+    platform: JSON.stringify(["Adult Swim", "Silvergames"]),
+    image: "my-friend-pedro.png",
+    background_image: ""
+  };
+
+  try {
+    stmt.run(game);
+    res.send("✅ Game inserted successfully");
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("❌ Error inserting game");
+  }
+});
+
+
 // Start server
 app.listen(3000, () => {
   console.log('Server running at http://localhost:3000');
