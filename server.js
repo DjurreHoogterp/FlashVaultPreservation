@@ -462,26 +462,6 @@ app.post('/edit/:id', (req, res) => {
   res.redirect(`/play/${gameId}`);
 });
 
-// EDITING HISTORY
-app.get('/edit-history/:id', (req, res) => {
-  const gameId = req.params.id;
-
-  const stmt = db.prepare(`
-    SELECT game_edits.*, games.title
-    FROM game_edits
-    LEFT JOIN games ON game_edits.game_id = games.id
-    WHERE game_edits.game_id = ?
-    ORDER BY edited_at DESC
-  `);
-
-  const edits = stmt.all(gameId).map(e => ({
-    ...e,
-    changes: JSON.parse(e.changes || '{}')
-  }));
-
-  res.render('edit_history', { edits });
-});
-
 
 // Upload a new game
 const multer = require('multer');
@@ -540,6 +520,7 @@ app.get('/ontology', (req, res) => {
 
   res.render('ontology', { fields });
 });
+
 app.get('/ontology/:field', (req, res) => {
   const field = req.params.field;
 
@@ -583,56 +564,6 @@ app.get('/ontology/:field', (req, res) => {
   res.render('ontology_field', { field, values: sortedValues });
 });
 
-//adding games:
-app.get('/admin/seed-batch', (req, res) => {
-  const filePath = path.join(__dirname, 'data', 'games-seed.json');
-  if (!fs.existsSync(filePath)) return res.status(404).send('Seed file not found');
-
-  const rawData = fs.readFileSync(filePath, 'utf-8');
-  let games;
-  try {
-    games = JSON.parse(rawData);
-  } catch (e) {
-    return res.status(500).send('Invalid JSON format');
-  }
-
-  const stmt = db.prepare(`
-    INSERT OR REPLACE INTO games (
-      id, title, description, file, genre, theme, controls,
-      multiplayer_mode, series_link, series_name, similar_titles,
-      weapons, mechanics, setting, visual_style, perspective,
-      difficulty, emotion, character, year, platform, image, background_image
-    ) VALUES (
-      @id, @title, @description, @file, @genre, @theme, @controls,
-      @multiplayer_mode, @series_link, @series_name, @similar_titles,
-      @weapons, @mechanics, @setting, @visual_style, @perspective,
-      @difficulty, @emotion, @character, @year, @platform, @image, @background_image
-    )
-  `);
-
-  try {
-    for (const g of games) {
-      stmt.run({
-        ...g,
-        genre: JSON.stringify(g.genre || []),
-        theme: JSON.stringify(g.theme || []),
-        controls: JSON.stringify(g.controls || []),
-        multiplayer_mode: JSON.stringify(g.multiplayer_mode || []),
-        similar_titles: JSON.stringify(g.similar_titles || []),
-        weapons: JSON.stringify(g.weapons || []),
-        mechanics: JSON.stringify(g.mechanics || []),
-        emotion: JSON.stringify(g.emotion || []),
-        platform: JSON.stringify(g.platform || []),
-        character: JSON.stringify(g.character || [])
-      });
-    }
-
-    res.send(`✅ Inserted ${games.length} games into the database.`);
-  } catch (e) {
-    console.error(e);
-    res.status(500).send('Error inserting games');
-  }
-});
 
 // Start server
 app.listen(3000, () => {
