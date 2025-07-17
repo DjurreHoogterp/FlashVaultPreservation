@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 const basicAuth = require('express-basic-auth');
 
 app.use('/admin', basicAuth({
-  users: { 'admin': process.env.ADMIN_PASSWORD },
+  users: { 'admin': process.env.ADMIN_PSWD },
   challenge: true,
 }));
 
