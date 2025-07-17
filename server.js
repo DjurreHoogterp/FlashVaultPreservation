@@ -19,6 +19,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 
 
+const basicAuth = require('express-basic-auth');
+
+app.use('/admin', basicAuth({
+  users: { 'admin': process.env.ADMIN_PASSWORD },
+  challenge: true,
+}));
+
 // Homepage: show 3 random games
 app.get('/', (req, res) => {
   const stmt = db.prepare('SELECT * FROM games ORDER BY RANDOM() LIMIT 3');
